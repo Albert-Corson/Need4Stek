@@ -9,7 +9,9 @@
 
 int main(void)
 {
-    exec_cmd(va_no_arg, "START_SIMULATION");
-    exec_cmd(va_no_arg, "STOP_SIMULATION");
+    dprintf(2, "%s\n", exec_cmd(va_no_arg, "START_SIMULATION"));
+    dprintf(2, "%s\n", exec_cmd(va_float, "CAR_FORWARD", 0.5));
+    dprintf(2, "%s\n", exec_cmd(va_int, "CYCLE_WAIT", 100));
+    dprintf(2, "%s\n", exec_cmd(va_no_arg, "STOP_SIMULATION"));
     return (0);
 }
