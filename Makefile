@@ -8,12 +8,13 @@
 NAME	=	ai
 
 SRC		=	src/main.c				\
+			src/cmd/exec_cmd.c		\
 			src/ll/node.c			\
 			src/ll/list.c
 
 OBJ		=	$(SRC:.c=.o)
 
-CFLAGS	=	-Wall -Iinclude
+CFLAGS	=	-Wextra -Wall -Iinclude
 CLIBS	=	-lm
 
 

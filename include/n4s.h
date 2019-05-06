@@ -17,12 +17,13 @@
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
+#include <stdarg.h>
 
 /*
 **  TYPES
 */
 
-typedef enum node_type_e node_type_t;
+typedef enum arg_type_e arg_type_t;
 typedef struct node_s node_t;
 typedef struct api_response_s api_response_t;
 typedef struct api_connector_s api_connector_t;
@@ -31,7 +32,11 @@ typedef struct api_connector_s api_connector_t;
 **  ENUMS
 */
 
-
+enum arg_type_e {
+    va_no_arg,
+    va_float,
+    va_int
+};
 
 /*
 **  STRUCTS
