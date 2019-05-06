@@ -41,14 +41,9 @@ struct node_s {
     char *label;
     void *next;
     void *value;
-    bool alloc_value;
     void (*destroy)(void *);
-    void (*set_str)(void *, char *);
-    void (*set_float)(void *, float);
-    void (*set_long)(void *, long);
-    char *(*get_str)(void *);
-    float (*get_float)(void *);
-    long (*get_long)(void *);
+    void (*set)(void *, void *, size_t);
+    void *(*get)(void *);
 };
 
 struct api_response_s {

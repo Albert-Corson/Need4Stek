@@ -9,8 +9,6 @@ NAME	=	ai
 
 SRC		=	src/main.c				\
 			src/ll/node.c			\
-			src/ll/setters.c		\
-			src/ll/getters.c		\
 			src/ll/list.c
 
 OBJ		=	$(SRC:.c=.o)

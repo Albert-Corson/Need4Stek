@@ -2,12 +2,8 @@
 ** EPITECH PROJECT, 2019
 ** AIA_n4s_2018_tmp
 ** File description:
-** main
+** send_cmd
 */
 
 #include "n4s.h"
 
-int main(void)
-{
-    return (0);
-}
