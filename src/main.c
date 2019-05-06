@@ -9,5 +9,7 @@
 
 int main(void)
 {
+    exec_cmd(va_no_arg, "START_SIMULATION");
+    exec_cmd(va_no_arg, "STOP_SIMULATION");
     return (0);
 }

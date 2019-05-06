@@ -71,4 +71,9 @@ int list_poll(void *begin, void **buffer);
 void *list_fetch(void *begin, char *label);
 void list_pop(void **begin, void *node);
 
+/*
+**  COMMANDS
+*/
+char *exec_cmd(int arg_type, char *cmd, ...);
+
 #endif /* !N4S_H_ */
