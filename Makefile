@@ -14,7 +14,8 @@ SRC		=	src/main.c							\
 			src/cmd/api_res_parse_opt.c			\
 			src/ll/node.c						\
 			src/ll/list.c						\
-			src/tools/str_parse.c
+			src/tools/str_parse.c				\
+			src/tools/str_skip_chars.c
 
 OBJ		=	$(SRC:.c=.o)
 

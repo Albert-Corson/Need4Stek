@@ -9,9 +9,10 @@
 
 int main(void)
 {
-    dprintf(2, "%s\n", exec_cmd(va_no_arg, "START_SIMULATION"));
-    dprintf(2, "%s\n", exec_cmd(va_float, "CAR_FORWARD", 0.5));
-    dprintf(2, "%s\n", exec_cmd(va_int, "CYCLE_WAIT", 100));
-    dprintf(2, "%s\n", exec_cmd(va_no_arg, "STOP_SIMULATION"));
+    exec_cmd(VA_NO_ARG, RES_NONE, "START_SIMULATION");
+    exec_cmd(VA_FLOAT, RES_NONE, "CAR_FORWARD", 0.5);
+    exec_cmd(VA_NO_ARG, RES_FLOAT_32, "GET_INFO_LIDAR");
+    exec_cmd(VA_INT, RES_FLOAT_1, "CYCLE_WAIT", 100);
+    exec_cmd(VA_NO_ARG, RES_NONE, "STOP_SIMULATION");
     return (0);
 }

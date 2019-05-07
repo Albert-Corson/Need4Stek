@@ -37,7 +37,7 @@ int parse_long_int(char *str, char end, va_list ap)
     long *ptr = va_arg(ap, long *);
     long val = 0;
 
-    for (; *str != end && *str && (*str == '\t' || *str == ' '); ++str);
+    str += str_skip_chars(str, "\t ");
     if (*str != end && *str)
         val = atol(str);
     else {
@@ -53,7 +53,7 @@ int parse_float(char *str, char end, va_list ap)
     float *ptr = va_arg(ap, float *);
     float val = 0;
 
-    for (; *str != end && *str && (*str == '\t' || *str == ' '); ++str);
+    str += str_skip_chars(str, "\t ");
     if (*str != end)
         val = atof(str);
     else {

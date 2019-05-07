@@ -24,6 +24,7 @@ int api_res_data_get_float_32(api_response_t *res, char *str)
         str += i;
         ++n;
     }
+    res->data_type = RES_FLOAT_32;
     res->data = data;
     res->destroy_data = free;
     return (i);
@@ -35,6 +36,8 @@ int api_res_data_get_float_1(api_response_t *res, char *str)
     int ret = 0;
 
     ret = str_parse(str, ':', DT_FLOAT, &data);
+    res->data_type = RES_FLOAT_1;
+    res->destroy_data = NULL;
     res->data = &data;
     return (ret);
 }
@@ -47,18 +50,18 @@ int api_res_data_get_long_2(api_response_t *res, char *str)
 
     if (!ret || !data)
         return (-1);
-    memset(data, 0, sizeof(long));
     tmp = str_parse(str + ret, 's', DT_LONG, &(data[0]));
     if (tmp == -1 || str[ret + tmp] != ',') {
         free(data);
         return (-1);
     }
-    ret += tmp;
+    ret += tmp + 1;
     tmp = str_parse(str + ret, 'n', DT_LONG, &(data[1]));
-    if (tmp == -1 || strncmp(str + ret, "s]:", 3) != 0) {
+    if (tmp == -1 || strncmp(str + ret + tmp, "s]:", 3) != 0) {
         free(data);
         return (-1);
     }
+    res->data_type = RES_LONG_2;
     res->data = data;
     res->destroy_data = free;
     return (ret + 3);

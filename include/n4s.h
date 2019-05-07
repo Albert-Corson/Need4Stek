@@ -84,7 +84,7 @@ struct api_response_s {
     void (*destroy_data)(void *);
     opt_info_type_t opt_type;
     int cp_id;
-    void *timestamp;
+    long timestamp[2];
 };
 
 struct api_connector_s {
@@ -110,5 +110,7 @@ api_response_t exec_cmd(int arg_tp, int res_type, char *cmd, ...);
 **  TOOLS
 */
 int str_parse(char *str, char end, data_type_t dt_type, ...);
+int str_skip_chars(char *str, char *to_skip);
+int get_char_pos(char *str, char goal);
 
 #endif /* !N4S_H_ */
