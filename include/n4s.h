@@ -23,6 +23,9 @@
 **  TYPES
 */
 
+typedef enum opt_info_type_e opt_info_type_t;
+typedef enum api_res_type_e api_res_type_t;
+typedef enum data_type_e data_type_t;
 typedef enum arg_type_e arg_type_t;
 typedef struct node_s node_t;
 typedef struct api_response_s api_response_t;
@@ -33,9 +36,31 @@ typedef struct api_connector_s api_connector_t;
 */
 
 enum arg_type_e {
-    va_no_arg,
-    va_float,
-    va_int
+    VA_NO_ARG,
+    VA_FLOAT,
+    VA_INT
+};
+
+enum data_type_e {
+    DT_NONE,
+    DT_FLOAT,
+    DT_LONG,
+    DT_STR
+};
+
+enum api_res_type_e {
+    RES_NONE,
+    RES_FLOAT_32,
+    RES_FLOAT_1,
+    RES_LONG_2,
+};
+
+enum opt_info_type_e {
+    OPT_NONE,
+    OPT_FIRST_CP,
+    OPT_CP,
+    OPT_LAP,
+    OPT_TRACK
 };
 
 /*
@@ -54,7 +79,12 @@ struct node_s {
 struct api_response_s {
     int value_id;
     bool status;
-    char *code_str;
+    api_res_type_t data_type;
+    void *data;
+    void (*destroy_data)(void *);
+    opt_info_type_t opt_type;
+    int cp_id;
+    void *timestamp;
 };
 
 struct api_connector_s {
@@ -74,6 +104,11 @@ void list_pop(void **begin, void *node);
 /*
 **  COMMANDS
 */
-char *exec_cmd(int arg_type, char *cmd, ...);
+api_response_t exec_cmd(int arg_tp, int res_type, char *cmd, ...);
+
+/*
+**  TOOLS
+*/
+int str_parse(char *str, char end, data_type_t dt_type, ...);
 
 #endif /* !N4S_H_ */

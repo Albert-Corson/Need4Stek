@@ -7,14 +7,18 @@
 
 NAME	=	ai
 
-SRC		=	src/main.c				\
-			src/cmd/exec_cmd.c		\
-			src/ll/node.c			\
-			src/ll/list.c
+SRC		=	src/main.c							\
+			src/cmd/exec_cmd.c					\
+			src/cmd/api_res_parse_info.c		\
+			src/cmd/api_res_parse_data.c		\
+			src/cmd/api_res_parse_opt.c			\
+			src/ll/node.c						\
+			src/ll/list.c						\
+			src/tools/str_parse.c
 
 OBJ		=	$(SRC:.c=.o)
 
-CFLAGS	=	-Wextra -Wall -Iinclude
+CFLAGS	=	-Wextra -Wall -Iinclude -g
 CLIBS	=	-lm
 
 
