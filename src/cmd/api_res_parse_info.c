@@ -63,9 +63,8 @@ api_response_t api_res_parse_res(char *str, int res_type)
         tmp = api_res_parse_data(&ret, str + 1, res_type);
         if (tmp == -1)
             return (ret);
-        str += tmp + 1;
+        str += tmp;
     }
-    for (; *str && *str != ':'; ++str);
     api_res_parse_opt(&ret, str + 1);
     return (ret);
 }

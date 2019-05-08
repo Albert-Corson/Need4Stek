@@ -10,18 +10,20 @@
 int api_res_data_get_float_32(api_response_t *res, char *str)
 {
     float *data = malloc(sizeof(float) * 32);
+    int tmp = 0;
     int i = 0;
     int n = 0;
 
     if (!data)
         return (-1);
     while (n < 32) {
-        i = str_parse(str, ':', DT_FLOAT, &(data[n]));
+        tmp = str_parse(str, ':', DT_FLOAT, &(data[n]));
         if (i < 0) {
             free(data);
             return (-1);
         }
-        str += i;
+        i += tmp;
+        str += tmp;
         ++n;
     }
     res->data_type = RES_FLOAT_32;
@@ -64,7 +66,7 @@ int api_res_data_get_long_2(api_response_t *res, char *str)
     res->data_type = RES_LONG_2;
     res->data = data;
     res->destroy_data = free;
-    return (ret + 3);
+    return (ret + tmp + 3);
 }
 
 int api_res_parse_data(api_response_t *res, char *str, int res_type)

@@ -38,7 +38,7 @@ api_response_t auto_exec(char *str, ...)
     "CAR_BACKWARDS", "WHEELS_DIR", "GET_INFO_LIDAR", "GET_CURRENT_SPEED", \
     "GET_CURRENT_WHEELS", "CYCLE_WAIT", "GET_CAR_SPEED_MAX", \
     "GET_CAR_SPEED_MIN", "GET_INFO_SIMTIME", NULL};
-    int res_tp[] = {0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 4};
+    int res_tp[] = {0, 0, 0, 0, 0, 1, 2, 2, 0, 2, 2, 4};
     int arg_tp[] = {0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0};
     api_response_t ret;
     va_list ap;

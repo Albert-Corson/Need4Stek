@@ -105,6 +105,7 @@ void list_pop(void **begin, void *node);
 **  COMMANDS
 */
 api_response_t exec_cmd(int arg_tp, int res_type, char *cmd, ...);
+api_response_t auto_exec(char *str, ...);
 
 /*
 **  TOOLS
