@@ -7,56 +7,40 @@
 
 #include "n4s.h"
 
-void *node_get_value(void *node)
+void *node_get_value(node_t *node)
 {
-    node_t *st_node = node;
-
-    return (st_node->value);
+    return (node->value);
 }
 
-void node_set_value(void *node, void *value, size_t n)
+void node_set_value(node_t *node, void *value, size_t n)
 {
-    node_t *st_node = node;
-
-    if (st_node->value)
-        free(st_node->value);
-    if (!value || !(st_node->value = malloc(n)))
+    if (node->value)
+        free(node->value);
+    if (!value || !(node->value = malloc(n)))
         return;
-    memcpy(st_node->value, value, n);
+    memcpy(node->value, value, n);
 }
 
-void node_destroy(void *node)
+static void *node_destroy(node_t *node)
 {
-    node_t *st_node = node;
-
-    if (st_node->label) {
-        free(st_node->label);
-        st_node->label = NULL;
-    }
-    if (st_node->value)
-        free(st_node->value);
+    if (node->value)
+        free(node->value);
     free(node);
+    return (NULL);
 }
 
-void node_ctor(void *node, char const *label)
+static void node_ctor(node_t *node)
 {
-    node_t *st_node = (node_t *)node;
-
-    if (!st_node)
-        return;
-    st_node->label = (label ? strdup(label) : NULL);
-    st_node->next = st_node;
-    st_node->destroy = node_destroy;
-    st_node->set = node_set_value;
-    st_node->get = node_get_value;
+    node->next = node;
+    node->destroy = node_destroy;
 }
 
-void *node_new(char const *label)
+node_t *node_new(void)
 {
-    node_t *st_node = malloc(sizeof(node_t));
+    node_t *node = malloc(sizeof(node_t));
 
-    if (!st_node)
+    if (!node)
         return (NULL);
-    node_ctor(st_node, label);
-    return ((void *)st_node);
+    node_ctor(node);
+    return ((void *)node);
 }

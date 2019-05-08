@@ -12,10 +12,17 @@ SRC		=	src/main.c							\
 			src/cmd/api_res_parse_info.c		\
 			src/cmd/api_res_parse_data.c		\
 			src/cmd/api_res_parse_opt.c			\
-			src/ll/node.c						\
-			src/ll/list.c						\
 			src/tools/str_parse.c				\
-			src/tools/str_skip_chars.c
+			src/tools/str_skip_chars.c			\
+			src/network/network.c				\
+			src/network/mx/mx.c					\
+			src/network/mx/mx_add.c				\
+			src/network/mx/mx_multiply.c		\
+			src/network/mx/mx_product.c			\
+			src/network/mx/mx_transpose.c		\
+			src/network/tools/forward.c			\
+			src/network/tools/randomize.c		\
+			src/network/tools/sigmoid.c
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -36,6 +43,5 @@ clean:
 
 fclean:	clean
 	rm -f $(NAME)
-
 
 re: fclean all

@@ -18,6 +18,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdarg.h>
+#include <time.h>
 
 /*
 **  TYPES
@@ -28,6 +29,10 @@ typedef enum api_res_type_e api_res_type_t;
 typedef enum data_type_e data_type_t;
 typedef enum arg_type_e arg_type_t;
 typedef struct node_s node_t;
+typedef struct vectorf_s vectorf_t;
+typedef struct vectori_s vectori_t;
+typedef struct network_s network_t;
+typedef struct mx_s mx_t;
 typedef struct api_response_s api_response_t;
 typedef struct api_connector_s api_connector_t;
 
@@ -67,13 +72,20 @@ enum opt_info_type_e {
 **  STRUCTS
 */
 
+struct vectorf_s {
+    double x;
+    double y;
+};
+
+struct vectori_s {
+    int x;
+    int y;
+};
+
 struct node_s {
-    char *label;
     void *next;
     void *value;
-    void (*destroy)(void *);
-    void (*set)(void *, void *, size_t);
-    void *(*get)(void *);
+    void *(*destroy)(node_t *);
 };
 
 struct api_response_s {
@@ -91,20 +103,74 @@ struct api_connector_s {
     api_response_t response;
 };
 
+struct network_s {
+    int inputs_size;
+    int hidden_size;
+    int hidden_count;
+    int outputs_size;
+    mx_t **layers;
+    mx_t **weights;
+    mx_t **biases;
+};
+
+struct mx_s {
+    vectori_t size;
+    double **arr;
+};
+
+/*
+**  NEURAL NETWORK
+*/
+
+network_t *network_new(int inputs, int outputs, int hiddens, int hidden_count);
+void *network_destroy(network_t *net);
+void network_randomize(network_t *net);
+void network_print(network_t *net);
+
+/*
+**  MATRICES
+*/
+
+mx_t *mx_new(int width, int height);
+void mx_print(mx_t *mx);
+mx_t *mx_apply(mx_t *mx, double (*fn)(double));
+mx_t *mx_fill_row(mx_t *mx, int row_id, double *data);
+void *mx_destroy(mx_t *mx);
+
+mx_t *mx_multiply_scalar(mx_t *a, double scalar, bool new);
+mx_t *mx_add(mx_t *a, mx_t *b, bool new);
+mx_t *mx_add_scalar(mx_t *a, double scalar, bool new);
+mx_t *mx_subtract(mx_t *a, mx_t *b, bool new);
+mx_t *mx_subtract_scalar(mx_t *a, double scalar, bool new);
+mx_t *mx_multiply(mx_t *a, mx_t *b, bool new);
+mx_t *mx_dot_product(mx_t *a, mx_t *b);
+mx_t *mx_transpose(mx_t *a);
+
+/*
+**  TOOLS
+*/
+
+double randomize(double x);
+mx_t *forward_propagation(network_t *net, double *inputs);
+double sigmoid(double x);
+double sigmoid_deriv(double x);
+
 /*
 **  LINKED LISTS
 */
-void *node_new(char const *label);
-void *list_append(void **begin, void *node);
-void list_destroy(void **begin);
-int list_poll(void *begin, void **buffer);
-void *list_fetch(void *begin, char *label);
-void list_pop(void **begin, void *node);
+
+node_t *node_new(void);
+void *node_get_value(node_t *node);
+void node_set_value(node_t *node, void *value, size_t n);
+node_t *list_append(node_t **begin, node_t *node);
+void *list_destroy(node_t **begin);
+int list_poll(node_t *begin, node_t **buffer);
+void list_pop(node_t **begin, node_t *node);
 
 /*
 **  COMMANDS
 */
-api_response_t exec_cmd(int arg_tp, int res_type, char *cmd, ...);
+api_response_t exec_cmd(int arg_type, int res_type, char *cmd, va_list ap);
 api_response_t auto_exec(char *str, ...);
 
 /*

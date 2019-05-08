@@ -7,77 +7,62 @@
 
 #include "n4s.h"
 
-void *list_append(void **begin, void *node)
+node_t *list_append(node_t **begin, node_t *node)
 {
-    node_t *st_begin = (node_t *)(*begin);
-    node_t *st_node = (node_t *)node;
-    node_t *tmp = st_begin;
+    node_t *tmp = *begin;
 
-    if (!st_node)
+    if (!begin || !node)
         return (NULL);
     if (*begin == NULL) {
         *begin = node;
-        st_node->next = node;
+        node->next = node;
     } else {
-        while (tmp->next != st_begin)
+        while (tmp->next != *begin)
             tmp = (node_t *)tmp->next;
         tmp->next = node;
-        st_node->next = *begin;
+        node->next = *begin;
     }
     return (node);
 }
 
-void list_destroy(void **begin)
+void *list_destroy(node_t **begin)
 {
-    node_t *curr = (node_t *)begin;
-
-    if (!curr)
-        return;
+    if (!begin || !*begin)
+        return (NULL);
     while (*begin)
         list_pop(begin, *begin);
     *begin = NULL;
+    return (NULL);
 }
 
-int list_poll(void *begin, void **buffer)
+int list_poll(node_t *begin, node_t **buffer)
 {
-    if (!begin)
+    if (!begin || !buffer)
         return (0);
     if (!*buffer)
         *buffer = begin;
-    else if (((node_t *)*buffer)->next != begin)
-        *buffer = ((node_t *)*buffer)->next;
+    else if ((*buffer)->next != begin)
+        *buffer = (*buffer)->next;
     else
         return (0);
     return (1);
 }
 
-void *list_fetch(void *begin, char *label)
+void list_pop(node_t **begin, node_t *node)
 {
-    node_t *curr = NULL;
-
-    while (list_poll(begin, (void **)&curr)) {
-        if (strcmp(curr->label, label) == 0)
-            return (curr);
-    }
-    return (NULL);
-}
-
-void list_pop(void **begin, void *node)
-{
-    node_t *st_node = (node_t *)node;
     node_t *tmp = NULL;
 
     if (!*begin || !node)
         return;
-    if (st_node == st_node->next) {
+    if (node == node->next) {
         *begin = NULL;
     } else {
-        if (st_node == *begin)
-            *begin = st_node->next;
+        if (node == *begin)
+            *begin = node->next;
         tmp = *begin;
         while (tmp->next != node && tmp->next != *begin)
             tmp = (node_t *)tmp->next;
-        tmp->next = st_node->next;
+        tmp->next = node->next;
     }
-    st_node->destroy(node);
+    node->destroy(node);
 }
