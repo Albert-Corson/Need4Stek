@@ -17,7 +17,6 @@ static void api_res_init(api_response_t *res)
     res->status = false;
     res->data_type = DT_NONE;
     res->data = NULL;
-    res->destroy_data = NULL;
     res->opt_type = OPT_NONE;
     res->cp_id = -1;
     res->timestamp[0] = 0;

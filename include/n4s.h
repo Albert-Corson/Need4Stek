@@ -28,7 +28,6 @@ typedef enum opt_info_type_e opt_info_type_t;
 typedef enum api_res_type_e api_res_type_t;
 typedef enum data_type_e data_type_t;
 typedef enum arg_type_e arg_type_t;
-typedef struct node_s node_t;
 typedef struct vectorf_s vectorf_t;
 typedef struct vectori_s vectori_t;
 typedef struct network_s network_t;
@@ -82,18 +81,11 @@ struct vectori_s {
     int y;
 };
 
-struct node_s {
-    void *next;
-    void *value;
-    void *(*destroy)(node_t *);
-};
-
 struct api_response_s {
     int value_id;
     bool status;
     api_res_type_t data_type;
     void *data;
-    void (*destroy_data)(void *);
     opt_info_type_t opt_type;
     int cp_id;
     long timestamp[2];
@@ -156,26 +148,16 @@ double sigmoid(double x);
 double sigmoid_deriv(double x);
 
 /*
-**  LINKED LISTS
-*/
-
-node_t *node_new(void);
-void *node_get_value(node_t *node);
-void node_set_value(node_t *node, void *value, size_t n);
-node_t *list_append(node_t **begin, node_t *node);
-void *list_destroy(node_t **begin);
-int list_poll(node_t *begin, node_t **buffer);
-void list_pop(node_t **begin, node_t *node);
-
-/*
 **  COMMANDS
 */
+
 api_response_t exec_cmd(int arg_type, int res_type, char *cmd, va_list ap);
 api_response_t auto_exec(char *str, ...);
 
 /*
 **  TOOLS
 */
+
 int str_parse(char *str, char end, data_type_t dt_type, ...);
 int str_skip_chars(char *str, char *to_skip);
 int get_char_pos(char *str, char goal);
