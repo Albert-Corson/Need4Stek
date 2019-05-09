@@ -59,10 +59,10 @@ void network_print(network_t *net)
         if (index >= 1)
             mx_print(net->biases[index - 1]);
         mx_print(net->layers[index]);
-        printf("\n");
+        dprintf(2, "\n");
         if (index < layers_count - 1) {
             mx_print(net->weights[index]);
-            printf("\n");
+            dprintf(2, "\n");
         }
         ++index;
     }

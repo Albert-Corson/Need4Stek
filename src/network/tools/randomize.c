@@ -25,5 +25,5 @@ void network_randomize(network_t *net)
 double randomize(double x)
 {
     x = x;
-    return ((double)(rand() % 10000) / (10000 + 0.1));
+    return (double)(rand() % 10000 + 1) / 10000 - 0.5;
 }

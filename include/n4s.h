@@ -146,6 +146,8 @@ double randomize(double x);
 mx_t *forward_propagation(network_t *net, double *inputs);
 double sigmoid(double x);
 double sigmoid_deriv(double x);
+double *format_input_data(void);
+void handle_output_data(double *data);
 
 /*
 **  COMMANDS

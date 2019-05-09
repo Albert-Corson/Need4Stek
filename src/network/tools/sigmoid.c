@@ -14,5 +14,5 @@ double sigmoid(double x)
 
 double sigmoid_deriv(double x)
 {
-    return (exp(-x) / pow(1 + exp(-x), 2));
+    return (exp(-x) / (pow(1 + exp(-x), 2)));
 }

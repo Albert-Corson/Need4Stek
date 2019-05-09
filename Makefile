@@ -22,7 +22,9 @@ SRC		=	src/main.c							\
 			src/network/mx/mx_transpose.c		\
 			src/network/tools/forward.c			\
 			src/network/tools/randomize.c		\
-			src/network/tools/sigmoid.c
+			src/network/tools/sigmoid.c			\
+			src/network/io/format_inputs.c		\
+			src/network/io/handle_outputs.c
 
 OBJ		=	$(SRC:.c=.o)
 

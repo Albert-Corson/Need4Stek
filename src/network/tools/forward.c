@@ -11,16 +11,14 @@ mx_t *forward_propagation(network_t *net, double *inputs)
 {
     mx_t *tmp = mx_new(net->inputs_size, 1);
     mx_t *res = NULL;
-    int index = 0;
+    int index = 1;
 
     mx_fill_row(net->layers[0], 0, inputs);
-    for (index = 0; index < net->inputs_size; index++)
-        tmp->arr[0][index] = net->layers[0]->arr[0][index];
-    index = 0;
-    while (index < net->hidden_count + 1) {
-        res = mx_dot_product(tmp, net->weights[index]);
+    mx_fill_row(tmp, 0, inputs);    
+    while (index < net->hidden_count + 2) {
+        res = mx_dot_product(tmp, net->weights[index - 1]);
         mx_destroy(tmp);
-        res = mx_add(res, net->biases[index], false);
+        res = mx_add(res, net->biases[index  - 1], false);
         res = mx_apply(res, sigmoid);
         tmp = res;
         ++index;

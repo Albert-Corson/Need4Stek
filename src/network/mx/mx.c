@@ -52,10 +52,10 @@ void mx_print(mx_t *mx)
     while (y < size.y) {
         x = 0;
         while (x < size.x) {
-            printf("%.2f\t", mx->arr[y][x]);
+            dprintf(2, "%.2f\t", mx->arr[y][x]);
             ++x;
         }
-        printf("\n");
+        dprintf(2, "\n");
         ++y;
     }
 }
