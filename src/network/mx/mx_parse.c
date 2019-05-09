@@ -30,6 +30,8 @@ static int parse_mx(mx_t *mx, FILE *file, char **save)
     size_t n = 0;
 
     while (!y || **save != '\n') {
+        free(*save);
+        *save = NULL;
         getline(save, &n, file);
         if (**save != 10 && (y >= mx->size.y || !parse_mx_line(mx, *save, y)))
             return (0);

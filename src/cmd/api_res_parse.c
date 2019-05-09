@@ -17,7 +17,7 @@ api_response_t api_res_new(void)
 
     res.value_id = -1;
     res.status = false;
-    res.data_type = DT_NONE;
+    res.data_type = RES_NONE;
     res.data = NULL;
     res.opt_type = OPT_NONE;
     res.cp_id = -1;
@@ -30,7 +30,7 @@ static void api_res_reset(api_response_t *res)
 {
     res->value_id = -1;
     res->status = false;
-    res->data_type = DT_NONE;
+    res->data_type = RES_NONE;
     res->data = NULL;
 }
 

@@ -157,7 +157,7 @@ void handle_output_data(double *data);
 */
 
 char *exec_cmd(int arg_type, char *cmd, va_list ap);
-void auto_exec(api_response_t *res, char *str, ...);
+bool auto_exec(api_response_t *res, char *str, ...);
 api_response_t api_res_new(void);
 
 /*
