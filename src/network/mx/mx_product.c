@@ -25,7 +25,7 @@ mx_t *mx_dot_product(mx_t *a, mx_t *b)
     mx_t *res = NULL;
     int x = 0;
     int y = 0;
- 
+
     if (a->size.x != b->size.y)
         return (NULL);
     res = mx_new(size.x, size.y);

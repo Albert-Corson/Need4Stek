@@ -7,17 +7,6 @@
 
 #include "n4s.h"
 
-int get_char_pos(char *str, char goal)
-{
-    int i = 0;
-
-    while (str && str[i] && str[i] != goal)
-        ++i;
-    if (!str || str[i] != goal)
-        return (-1);
-    return (i);
-}
-
 int parse_str(char *str, char end, va_list ap)
 {
     int ret = get_char_pos(str, end);
@@ -38,12 +27,10 @@ int parse_long_int(char *str, char end, va_list ap)
     long val = 0;
 
     str += str_skip_chars(str, "\t ");
-    if (*str != end && *str)
+    if (str_skip_chars(str, "-+0123456789") > 0 && *str != end && *str)
         val = atol(str);
-    else {
-        *ptr = 0;
+    else
         return (-1);
-    }
     *ptr = val;
     return (get_char_pos(str, end));
 }
@@ -54,12 +41,24 @@ int parse_float(char *str, char end, va_list ap)
     float val = 0;
 
     str += str_skip_chars(str, "\t ");
-    if (*str != end)
+    if (str_skip_chars(str, ".-+0123456789") > 0 && *str != end)
         val = atof(str);
-    else {
-        *ptr = 0;
+    else
         return (-1);
-    }
+    *ptr = val;
+    return (get_char_pos(str, end));
+}
+
+int parse_double(char *str, char end, va_list ap)
+{
+    double *ptr = va_arg(ap, double *);
+    double val = 0;
+
+    str += str_skip_chars(str, "\t ");
+    if (str_skip_chars(str, ".-+0123456789") > 0 && *str != end)
+        val = strtod(str, NULL);
+    else
+        return (-1);
     *ptr = val;
     return (get_char_pos(str, end));
 }
@@ -67,8 +66,8 @@ int parse_float(char *str, char end, va_list ap)
 int str_parse(char *str, char end, data_type_t dt_type, ...)
 {
     va_list ap;
-    int (*parser[3])(char *, char, va_list) = {parse_float, parse_long_int, \
-    parse_str};
+    int (*parser[4])(char *, char, va_list) = {parse_float, parse_long_int, \
+        parse_str, parse_double};
     int *tmp = NULL;
     int i = 0;
 
@@ -82,5 +81,5 @@ int str_parse(char *str, char end, data_type_t dt_type, ...)
     } else
         i = parser[dt_type - 1](str, end, ap);
     va_end(ap);
-    return (i + 1);
+    return (i == -1 ? -1 : i + 1);
 }

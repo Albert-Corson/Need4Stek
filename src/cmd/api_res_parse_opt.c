@@ -26,7 +26,7 @@ void api_res_parse_opt_data(api_response_t *res, char *str)
 void api_res_parse_opt(api_response_t *res, char *str)
 {
     char *opts[5] = {"No further info\n", "First CP Cleared:", "CP Cleared:", \
-    "Lap Cleared:", "Track Cleared:"};
+        "Lap Cleared:", "Track Cleared:"};
     int len = 0;
     int i = 0;
     int check = 1;

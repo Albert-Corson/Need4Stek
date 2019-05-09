@@ -33,9 +33,9 @@ void network_init(network_t *net)
     vectori_t sizes = {0, net->inputs_size};
     int layers_count = net->hidden_count + 2;
 
-    net->layers = calloc(layers_count, sizeof(mx_t *));
-    net->weights = calloc(layers_count - 1, sizeof(mx_t *));
-    net->biases = calloc(layers_count - 1, sizeof(mx_t *));
+    net->layers = calloc(layers_count + 1, sizeof(mx_t *));
+    net->weights = calloc(layers_count, sizeof(mx_t *));
+    net->biases = calloc(layers_count, sizeof(mx_t *));
     while (index < layers_count) {
         sizes.x = sizes.y;
         sizes.y = net->hidden_size;

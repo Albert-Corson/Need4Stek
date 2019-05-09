@@ -14,11 +14,11 @@ mx_t *forward_propagation(network_t *net, double *inputs)
     int index = 1;
 
     mx_fill_row(net->layers[0], 0, inputs);
-    mx_fill_row(tmp, 0, inputs);    
+    mx_fill_row(tmp, 0, inputs);
     while (index < net->hidden_count + 2) {
         res = mx_dot_product(tmp, net->weights[index - 1]);
         mx_destroy(tmp);
-        res = mx_add(res, net->biases[index  - 1], false);
+        res = mx_add(res, net->biases[index - 1], false);
         res = mx_apply(res, sigmoid);
         tmp = res;
         ++index;

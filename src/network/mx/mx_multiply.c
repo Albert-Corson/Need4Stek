@@ -22,7 +22,7 @@ mx_t *mx_multiply_scalar(mx_t *a, double scalar, bool new)
             ++x;
         }
         ++y;
-    } 
+    }
     return (res);
 }
 

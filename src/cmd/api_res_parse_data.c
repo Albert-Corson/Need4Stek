@@ -61,7 +61,7 @@ int api_res_data_get_long_2(api_response_t *res, char *str)
 int api_res_parse_data(api_response_t *res, char *str, int res_type)
 {
     int (*data_get[3])(api_response_t *, char *) = {api_res_data_get_float_32, \
-    api_res_data_get_float_1, api_res_data_get_long_2};
+        api_res_data_get_float_1, api_res_data_get_long_2};
 
     if (res_type < 0 || !res || !str || !*str)
         return (-1);

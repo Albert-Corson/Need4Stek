@@ -49,7 +49,8 @@ enum data_type_e {
     DT_NONE,
     DT_FLOAT,
     DT_LONG,
-    DT_STR
+    DT_STR,
+    DT_DOUBLE
 };
 
 enum api_res_type_e {
@@ -118,6 +119,8 @@ network_t *network_new(int inputs, int outputs, int hiddens, int hidden_count);
 void *network_destroy(network_t *net);
 void network_randomize(network_t *net);
 void network_print(network_t *net);
+void network_save(network_t *net, char *filename);
+network_t *network_restore(char *savefile);
 
 /*
 **  MATRICES
@@ -153,8 +156,9 @@ void handle_output_data(double *data);
 **  COMMANDS
 */
 
-api_response_t exec_cmd(int arg_type, int res_type, char *cmd, va_list ap);
-api_response_t auto_exec(char *str, ...);
+char *exec_cmd(int arg_type, char *cmd, va_list ap);
+void auto_exec(api_response_t *res, char *str, ...);
+api_response_t api_res_new(void);
 
 /*
 **  TOOLS

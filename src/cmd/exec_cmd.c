@@ -7,11 +7,10 @@
 
 #include "n4s.h"
 
-api_response_t api_res_parse_res(char *str, int res_type);
+void api_res_parse_res(api_response_t *ret, char *str, int res_type);
 
-api_response_t exec_cmd(int arg_type, int res_type, char *cmd, va_list ap)
+char *exec_cmd(int arg_type, char *cmd, va_list ap)
 {
-    api_response_t ret;
     size_t n = 0;
     char *res = NULL;
 
@@ -23,31 +22,29 @@ api_response_t exec_cmd(int arg_type, int res_type, char *cmd, va_list ap)
     dprintf(1, "\n");
     if (getline(&res, &n, stdin) < 0)
         res = NULL;
-    ret = api_res_parse_res(res, res_type);
-    free(res);
-    return (ret);
+    return (res);
 }
 
-api_response_t auto_exec(char *str, ...)
+void auto_exec(api_response_t *res, char *cmd, ...)
 {
     int i = 0;
     char *cmds[] = {"START_SIMULATION", "STOP_SIMULATION", "CAR_FORWARD", \
-    "CAR_BACKWARDS", "WHEELS_DIR", "GET_INFO_LIDAR", "GET_CURRENT_SPEED", \
-    "GET_CURRENT_WHEELS", "CYCLE_WAIT", "GET_CAR_SPEED_MAX", \
-    "GET_CAR_SPEED_MIN", "GET_INFO_SIMTIME", NULL};
+        "CAR_BACKWARDS", "WHEELS_DIR", "GET_INFO_LIDAR", "GET_CURRENT_SPEED", \
+        "GET_CURRENT_WHEELS", "CYCLE_WAIT", "GET_CAR_SPEED_MAX", \
+        "GET_CAR_SPEED_MIN", "GET_INFO_SIMTIME", NULL};
     int res_tp[] = {0, 0, 0, 0, 0, 1, 2, 2, 0, 2, 2, 4};
     int arg_tp[] = {0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0};
-    api_response_t ret;
+    char *str = NULL;
     va_list ap;
 
-    va_start(ap, str);
+    va_start(ap, cmd);
     while (i >= 0 && cmds[i]) {
-        if (strcmp(cmds[i], str) == 0) {
-            ret = exec_cmd(arg_tp[i], res_tp[i], cmds[i], ap);
+        if (strcmp(cmds[i], cmd) == 0) {
+            str = exec_cmd(arg_tp[i], cmds[i], ap);
+            api_res_parse_res(res, str, res_tp[i]);
             i = -2;
         }
         ++i;
     }
     va_end(ap);
-    return (ret);
 }
