@@ -9,13 +9,12 @@
 
 int api_res_data_get_float_32(api_response_t *res, char *str)
 {
-    float data[32] = {0};
     int tmp = 0;
     int i = 0;
     int n = 0;
 
     while (n < 32) {
-        tmp = str_parse(str, ':', DT_FLOAT, &(data[n]));
+        tmp = str_parse(str, ':', DT_FLOAT, &(res->data[n]));
         if (i < 0)
             return (-1);
         i += tmp;
@@ -23,38 +22,35 @@ int api_res_data_get_float_32(api_response_t *res, char *str)
         ++n;
     }
     res->data_type = RES_FLOAT_32;
-    res->data = data;
     return (i);
 }
 
 int api_res_data_get_float_1(api_response_t *res, char *str)
 {
-    double data = 0;
     int ret = 0;
 
-    ret = str_parse(str, ':', DT_FLOAT, &data);
+    memset(res->data, 0, sizeof(double) * 32);
+    ret = str_parse(str, ':', DT_FLOAT, &(res->data[0]));
     res->data_type = RES_FLOAT_1;
-    res->data = &data;
     return (ret);
 }
 
 int api_res_data_get_long_2(api_response_t *res, char *str)
 {
-    long data[2] = {0};
     int ret = *str == '[';
     int tmp = 0;
 
     if (!ret)
         return (-1);
-    tmp = str_parse(str + ret, 's', DT_LONG, &(data[0]));
+    memset(res->data, 0, sizeof(double) * 32);
+    tmp = str_parse(str + ret, 's', DT_LONG, &(res->data[0]));
     if (tmp == -1 || str[ret + tmp] != ',')
         return (-1);
     ret += tmp + 1;
-    tmp = str_parse(str + ret, 'n', DT_LONG, &(data[1]));
+    tmp = str_parse(str + ret, 'n', DT_LONG, &(res->data[1]));
     if (tmp == -1 || strncmp(str + ret + tmp, "s]:", 3) != 0)
         return (-1);
     res->data_type = RES_LONG_2;
-    res->data = data;
     return (ret + tmp + 3);
 }
 

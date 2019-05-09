@@ -74,6 +74,7 @@ network_t *network_new(int inputs, int outputs, int hiddens, int hidden_count)
 
     if (!net)
         return (NULL);
+    net->rank = -1;
     net->inputs_size = inputs;
     net->hidden_count = hidden_count;
     net->hidden_size = hiddens;

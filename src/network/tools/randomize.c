@@ -27,3 +27,11 @@ double randomize(double x)
     x = x;
     return (double)(rand() % 10000 + 1) / 10000 - 0.5;
 }
+
+double clang(double min, double max)
+{
+    double randnbr = (double)rand() / 10;
+
+    randnbr = randnbr / ((double)RAND_MAX / 10 + 0.1);
+    return (floor(randnbr * (max - min + 1) + min));
+}

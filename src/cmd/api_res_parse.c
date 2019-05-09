@@ -18,9 +18,9 @@ api_response_t api_res_new(void)
     res.value_id = -1;
     res.status = false;
     res.data_type = RES_NONE;
-    res.data = NULL;
+    memset(res.data, 0, sizeof(double) * 32);
     res.opt_type = OPT_NONE;
-    res.cp_id = -1;
+    res.cp_id = 0;
     res.timestamp[0] = 0;
     res.timestamp[1] = 0;
     return (res);
@@ -31,7 +31,7 @@ static void api_res_reset(api_response_t *res)
     res->value_id = -1;
     res->status = false;
     res->data_type = RES_NONE;
-    res->data = NULL;
+    memset(res->data, 0, sizeof(double) * 32);
 }
 
 static int api_res_get_status(api_response_t *res, char *str)

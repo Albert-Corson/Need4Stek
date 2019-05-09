@@ -7,14 +7,13 @@
 
 #include "n4s.h"
 
-bool detect_collision(void)
+bool detect_collision(api_response_t *res)
 {
-    api_response_t res;
-    res = auto_exec("GET_INFO_LIDAR");
     int index = 0;
 
+    auto_exec(res, "GET_INFO_LIDAR");
     while (index != 32) {
-        if (((float *)res.data)[index] == 0)
+        if (res->data[index] == 0)
             return (true);
         index++;
     }

@@ -15,10 +15,12 @@ char *exec_cmd(int arg_type, char *cmd, va_list ap)
     char *res = NULL;
 
     dprintf(1, "%s", cmd);
-    if (arg_type == VA_FLOAT)
+    if (arg_type == VA_FLOAT) {
         dprintf(1, ":%f", va_arg(ap, double));
-    else if (arg_type == VA_INT)
+    }
+    else if (arg_type == VA_INT) {
         dprintf(1, ":%d", va_arg(ap, int));
+    }
     dprintf(1, "\n");
     if (getline(&res, &n, stdin) < 0)
         res = NULL;

@@ -27,12 +27,18 @@ SRC		=	src/main.c							\
 			src/network/tools/forward.c			\
 			src/network/tools/randomize.c		\
 			src/network/tools/sigmoid.c			\
+			src/network/io/detect_collision.c	\
 			src/network/io/format_inputs.c		\
-			src/network/io/handle_outputs.c
+			src/network/io/handle_outputs.c		\
+			src/network/genetic/sample.c		\
+			src/network/genetic/selection.c		\
+			src/network/genetic/breed.c			\
+			src/network/genetic/evolve.c		\
+			src/network/genetic/evaluate.c		\
 
 OBJ		=	$(SRC:.c=.o)
 
-CFLAGS	=	-Wextra -Wall -Iinclude -g
+CFLAGS	=	-Wextra -Wall -Iinclude
 CLIBS	=	-lm
 
 
@@ -51,3 +57,5 @@ fclean:	clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all debug clean fclean re

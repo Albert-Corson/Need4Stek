@@ -86,7 +86,7 @@ struct api_response_s {
     int value_id;
     bool status;
     api_res_type_t data_type;
-    void *data;
+    double data[32];
     opt_info_type_t opt_type;
     int cp_id;
     long timestamp[2];
@@ -97,6 +97,7 @@ struct api_connector_s {
 };
 
 struct network_s {
+    double rank;
     int inputs_size;
     int hidden_size;
     int hidden_count;
@@ -121,6 +122,14 @@ void network_randomize(network_t *net);
 void network_print(network_t *net);
 void network_save(network_t *net, char *filename);
 network_t *network_restore(char *savefile);
+network_t **create_sample(long seed, int size, int inputs, int outputs);
+void *destroy_sample(network_t **sample);
+network_t *evaluate_network(api_response_t *res, network_t *net);
+network_t **evaluate_sample(api_response_t *res, network_t **sample);
+network_t **keep_elite(network_t **sample, int size);
+network_t *breed(network_t *mother, network_t *father);
+network_t **breed_sample(network_t **sample, int size);
+network_t **evolve_sample(network_t **sample, int size, int generations);
 
 /*
 **  MATRICES
@@ -146,11 +155,13 @@ mx_t *mx_transpose(mx_t *a);
 */
 
 double randomize(double x);
+double clang(double min, double max);
 mx_t *forward_propagation(network_t *net, double *inputs);
 double sigmoid(double x);
 double sigmoid_deriv(double x);
-double *format_input_data(void);
-void handle_output_data(double *data);
+double *format_input_data(api_response_t *res);
+void handle_output_data(double *data, api_response_t *res);
+bool detect_collision(api_response_t *res);
 
 /*
 **  COMMANDS
