@@ -35,10 +35,12 @@ SRC		=	src/main.c							\
 			src/network/genetic/breed.c			\
 			src/network/genetic/evolve.c		\
 			src/network/genetic/evaluate.c		\
+			src/backdoor/backdoor_ai.c			\
+			src/backdoor/backdoor_main.c		\
 
 OBJ		=	$(SRC:.c=.o)
 
-CFLAGS	=	-Wextra -Wall -Iinclude
+CFLAGS	=	-Wextra -Wall -Iinclude -g
 CLIBS	=	-lm
 
 

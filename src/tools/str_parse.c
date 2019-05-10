@@ -37,12 +37,12 @@ int parse_long_int(char *str, char end, va_list ap)
 
 int parse_float(char *str, char end, va_list ap)
 {
-    float *ptr = va_arg(ap, float *);
-    float val = 0;
+    double *ptr = va_arg(ap, double *);
+    double val = 0;
 
     str += str_skip_chars(str, "\t ");
     if (str_skip_chars(str, ".-+0123456789") > 0 && *str != end)
-        val = atof(str);
+        val = strtod(str, NULL);
     else
         return (-1);
     *ptr = val;
