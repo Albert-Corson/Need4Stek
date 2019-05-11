@@ -37,6 +37,7 @@ SRC		=	src/main.c							\
 			src/network/genetic/evaluate.c		\
 			src/backdoor/backdoor_ai.c			\
 			src/backdoor/backdoor_main.c		\
+			src/backdoor/backdoor_ai_tools.c	\
 
 OBJ		=	$(SRC:.c=.o)
 

@@ -7,17 +7,34 @@
 
 #include "n4s.h"
 
-void set_movement(api_response_t *res);
+bool set_movement(api_response_t *res, double speed);
+
+double get_forward_speed(api_response_t *res)
+{
+    double max = 0.0;
+    double speed = 0.0;
+    double wished = 35.0;
+
+    auto_exec(res, GET_CAR_SPEED_MAX);
+    max = *res->data;
+    speed = wished / max;
+    if (speed >= 1.00)
+        return (0.95);
+    return (speed);
+}
 
 int bck_main(void)
 {
     api_response_t res = api_res_new();
+    bool running = true;
+    double speed = 0.0;
 
     if (!auto_exec(&res, START_SIMULATION))
         return (84);
-    auto_exec(&res, CAR_FORWARD, 0.25);
-    while (res.status && res.opt_type != OPT_TRACK)
-        set_movement(&res);
+    speed = get_forward_speed(&res);
+    auto_exec(&res, CAR_FORWARD, speed);
+    while (running && res.status && res.opt_type != OPT_TRACK)
+        running = set_movement(&res, speed);
     auto_exec(&res, STOP_SIMULATION);
     return (0);
 }
