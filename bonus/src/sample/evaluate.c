@@ -20,10 +20,7 @@ void evaluate_network(network_t *net)
         handle_output_data(out->arr[0], &res);
         auto_exec(&res, CYCLE_WAIT, 5);
     }
-    if (res.timestamp[0] == 0)
-        net->rank = res.cp_id;
-    else
-        net->rank = (double)res.cp_id / (double)res.timestamp[0];
+    net->rank = res.cp_id + 1 / (double)(1 + res.timestamp[0]);
     dprintf(2, "cpc: %d\n", res.cp_id);
     dprintf(2, "tim: %ld\n", res.timestamp[0]);
     dprintf(2, "eff: %.5f\n", net->rank);
