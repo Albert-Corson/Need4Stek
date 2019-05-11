@@ -5,41 +5,40 @@
 ** breed
 */
 
-#include "n4s.h"
+#include "train.h"
 
-network_t *find_next_parent(network_t **sample, int *index)
+network_t *find_random_parent(network_t **sample, int size)
 {
-    while (sample[*index]) {
-        if (sample[*index] && sample[*index]->rank != -1) {
-            ++*index;
-            return (sample[*index]);
+    int index = clang(0, size - 1);
+    int loop = 0;
+
+    while (index < size) {
+        if (sample[index] && sample[index]->rank != -1) {
+            ++index;
+            return (sample[index - 1]);
         }
-        ++*index;
+        ++index;
+        if (index == size && !loop) {
+            loop = 1;
+            index = 0;
+        }
     }
     return (NULL);
 }
 
 network_t **breed_sample(network_t **sample, int size)
 {
-    int x = 0;
-    int y = 0;
-    int desired_children = ((1 - 0.25) * size) / ((0.25) * size);
-    int children_count = 0;
-    network_t *mother = find_next_parent(sample, &y);
-    network_t *father = find_next_parent(sample, &y);
-    network_t *first = mother;
+    network_t *mother = find_random_parent(sample, size);
+    network_t *father = find_random_parent(sample, size);
+    int index = 0;
 
-    while (y < size && mother && father) {
-        children_count = 0;
-        for (x = 0; x < size && children_count < desired_children; ++x) {
-            children_count += (sample[x] == NULL);
-            sample[x] = (!sample[x] ? breed(mother, father) : sample[x]);
+    while (index < size && mother && father) {
+        if (sample[index] == NULL) {
+            sample[index] = breed(mother, father);
+            mother = find_random_parent(sample, size);
+            father = find_random_parent(sample, size);
         }
-        mother = father;
-        if (!(father = find_next_parent(sample, &y)) && first) {
-            father = first;
-            first = NULL;
-        }
+        ++index;
     }
     return (sample);
 }

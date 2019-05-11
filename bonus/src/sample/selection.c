@@ -5,7 +5,7 @@
 ** selection
 */
 
-#include "n4s.h"
+#include "train.h"
 
 int find_replacement_id(network_t **sample, int max, int curr, int *ids)
 {
@@ -47,7 +47,7 @@ bool in_array(int *arr, int size, int value)
 
 network_t **keep_elite(network_t **sample, int size)
 {
-    int max = 0.25 * size;
+    int max = fmax(2, floor(0.25 * size));
     int bests[max];
     int index = 0;
 

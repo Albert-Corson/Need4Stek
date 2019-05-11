@@ -5,7 +5,7 @@
 ** sample
 */
 
-#include "n4s.h"
+#include "train.h"
 
 network_t **create_sample(long seed, int size, int inputs, int outputs)
 {

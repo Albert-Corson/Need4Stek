@@ -13,6 +13,7 @@ void api_res_parse_opt_data(api_response_t *res, char *str)
 
     str += str_skip_chars(str, "\t [");
     tmp = str_parse(str, ']', DT_LONG, &(res->cp_id));
+    res->cp_id += 1;
     if (tmp < 0 || str[tmp] != '[')
         return;
     str += tmp + 1;

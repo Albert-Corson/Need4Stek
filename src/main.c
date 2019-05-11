@@ -10,9 +10,5 @@
 
 int main(void)
 {
-    network_t **sample = create_sample(0, 20, 36, 2);
-
-    evolve_sample(sample, 20, 1);
-    destroy_sample(sample);
     return (0);
 }
