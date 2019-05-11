@@ -18,12 +18,12 @@ double get_longer_dist_angle(double *signals);
 double get_turn(api_response_t *res, double average, double turn)
 {
     vectorf_t sides;
-    double div_by = 9.5;
+    double div_by = 8.5;
 
     sides = get_average_side_dist(res->data);
     if (average < 650.0)
-        div_by = 5.5;
-    turn += turn + ((sides.x + sides.y) * 2);
+        div_by = 5.1;
+    turn += ((sides.x + sides.y) * 2.0);
     turn /= div_by;
     if (turn <= -1.0)
         return (-1.0);
