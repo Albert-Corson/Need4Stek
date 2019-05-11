@@ -12,12 +12,12 @@ network_t *evaluate_network(api_response_t *res, network_t *net)
     double *inputs = NULL;
     mx_t *out = NULL;
 
-    auto_exec(res, "START_SIMULATION");
+    auto_exec(res, START_SIMULATION);
     while (!detect_collision(res)) {
         inputs = format_input_data(res);
         out = forward_propagation(net, inputs);
         handle_output_data(out->arr[0], res);
-        auto_exec(res, "CYCLE_WAIT", 5);
+        auto_exec(res, CYCLE_WAIT, 5);
     }
     if (res->timestamp[0] == 0)
         net->rank = 0;
@@ -26,7 +26,7 @@ network_t *evaluate_network(api_response_t *res, network_t *net)
     dprintf(2, "cpc: %d\n", res->cp_id);
     dprintf(2, "tim: %ld\n", res->timestamp[0]);
     dprintf(2, "eff: %.5f\n", net->rank);
-    auto_exec(res, "STOP_SIMULATION");
+    auto_exec(res, STOP_SIMULATION);
     return (net);
 }
 

@@ -25,28 +25,23 @@ char *exec_cmd(int arg_type, char *cmd, va_list ap)
     return (res);
 }
 
-bool auto_exec(api_response_t *res, char *cmd, ...)
+bool auto_exec(api_response_t *res, api_commands_t cmd, ...)
 {
-    int i = 0;
-    char *cmds[] = {"START_SIMULATION", "STOP_SIMULATION", "CAR_FORWARD", \
+    char *cmds[12] = {"START_SIMULATION", "STOP_SIMULATION", "CAR_FORWARD", \
         "CAR_BACKWARDS", "WHEELS_DIR", "GET_INFO_LIDAR", "GET_CURRENT_SPEED", \
         "GET_CURRENT_WHEELS", "CYCLE_WAIT", "GET_CAR_SPEED_MAX", \
-        "GET_CAR_SPEED_MIN", "GET_INFO_SIMTIME", NULL};
-    int res_tp[] = {0, 0, 0, 0, 0, 1, 2, 2, 0, 2, 2, 3};
-    int arg_tp[] = {0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0};
+        "GET_CAR_SPEED_MIN", "GET_INFO_SIMTIME"};
+    int res_tp[12] = {0, 0, 0, 0, 0, 1, 2, 2, 0, 2, 2, 3};
+    int arg_tp[12] = {0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0};
     char *str = NULL;
     va_list ap;
 
+    if (cmd < 0 || cmd > 11)
+        return (false);
     va_start(ap, cmd);
-    while (i >= 0 && cmds[i]) {
-        if (strcmp(cmds[i], cmd) == 0) {
-            str = exec_cmd(arg_tp[i], cmds[i], ap);
-            api_res_parse_res(res, str, res_tp[i]);
-            free(str);
-            i = -2;
-        }
-        ++i;
-    }
+    str = exec_cmd(arg_tp[cmd], cmds[cmd], ap);
+    api_res_parse_res(res, str, res_tp[cmd]);
+    free(str);
     va_end(ap);
     return (res->status);
 }

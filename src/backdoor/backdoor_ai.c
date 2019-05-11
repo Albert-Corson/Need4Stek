@@ -67,14 +67,14 @@ bool avoid_collision(api_response_t *res)
 
     if (avoid) {
         dir_check = avoid_walls(res->data);
-        auto_exec(res, "WHEELS_DIR", 0.0);
-        auto_exec(res, "CAR_FORWARD", 0.0);
-        auto_exec(res, "CYCLE_WAIT", 5);
-        auto_exec(res, "CAR_BACKWARDS", 0.7);
-        auto_exec(res, "CYCLE_WAIT", 8);
-        auto_exec(res, "CAR_FORWARD", 0.25);
+        auto_exec(res, WHEELS_DIR, 0.0);
+        auto_exec(res, CAR_FORWARD, 0.0);
+        auto_exec(res, CYCLE_WAIT, 5);
+        auto_exec(res, CAR_BACKWARDS, 0.7);
+        auto_exec(res, CYCLE_WAIT, 8);
+        auto_exec(res, CAR_FORWARD, 0.25);
         if (dir_check >= -0.05 && dir_check <= 0.05)
-            auto_exec(res, "WHEELS_DIR", 0.6 * (dir_check < 0.0 ? -1.0 : 1.0));
+            auto_exec(res, WHEELS_DIR, 0.6 * (dir_check < 0.0 ? -1.0 : 1.0));
     }
     return (avoid);
 }
@@ -83,10 +83,10 @@ void set_movement(api_response_t *res)
 {
     double wheels = 0;
 
-    if (!auto_exec(res, "GET_INFO_LIDAR"))
+    if (!auto_exec(res, GET_INFO_LIDAR))
         return;
     if (avoid_collision(res))
         return;
     wheels = avoid_walls(res->data);
-    auto_exec(res, "WHEELS_DIR", wheels);
+    auto_exec(res, WHEELS_DIR, wheels);
 }

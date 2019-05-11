@@ -24,6 +24,7 @@
 **  TYPES
 */
 
+typedef enum api_commands_e api_commands_t;
 typedef enum opt_info_type_e opt_info_type_t;
 typedef enum api_res_type_e api_res_type_t;
 typedef enum data_type_e data_type_t;
@@ -66,6 +67,21 @@ enum opt_info_type_e {
     OPT_CP,
     OPT_LAP,
     OPT_TRACK
+};
+
+enum api_commands_e {
+    START_SIMULATION,
+    STOP_SIMULATION,
+    CAR_FORWARD,
+    CAR_BACKWARDS,
+    WHEELS_DIR,
+    GET_INFO_LIDAR,
+    GET_CURRENT_SPEED,
+    GET_CURRENT_WHEELS,
+    CYCLE_WAIT,
+    GET_CAR_SPEED_MAX,
+    GET_CAR_SPEED_MIN,
+    GET_INFO_SIMTIME
 };
 
 /*
@@ -168,7 +184,7 @@ bool detect_collision(api_response_t *res);
 */
 
 char *exec_cmd(int arg_type, char *cmd, va_list ap);
-bool auto_exec(api_response_t *res, char *str, ...);
+bool auto_exec(api_response_t *res, api_commands_t cmd, ...);
 api_response_t api_res_new(void);
 
 /*
