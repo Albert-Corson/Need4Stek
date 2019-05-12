@@ -143,7 +143,7 @@ void *destroy_sample(network_t **sample);
 void evaluate_network(network_t *net);
 network_t **evaluate_sample(network_t **sample);
 network_t **keep_elite(network_t **sample, int size);
-network_t *breed(network_t *mother, network_t *father);
+network_t *breed(network_t *m, network_t *f, double mutation);
 network_t **breed_sample(network_t **sample, int size);
 network_t **evolve_sample(network_t **sample, int size, int generations);
 
@@ -194,5 +194,6 @@ api_response_t api_res_new(void);
 int str_parse(char *str, char end, data_type_t dt_type, ...);
 int str_skip_chars(char *str, char *to_skip);
 int get_char_pos(char *str, char goal);
+double get_average_dist(double *signals);
 
 #endif /* !N4S_H_ */

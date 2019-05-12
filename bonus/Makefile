@@ -29,6 +29,7 @@ SRC		=	../src/cmd/exec_cmd.c					\
 			../src/network/io/detect_collision.c	\
 			../src/network/io/format_inputs.c		\
 			../src/network/io/handle_outputs.c		\
+			../src/backdoor/backdoor_ai_tools.c		\
 			src/sample/sample.c						\
 			src/sample/selection.c					\
 			src/sample/breed.c						\

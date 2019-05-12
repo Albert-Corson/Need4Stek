@@ -67,7 +67,7 @@ network_t *network_restore(char *savefile)
     FILE *file = savefile ? fopen(savefile, "r") : NULL;
 
     if (!file) {
-        ret = network_new(36, 2, 72, 1);
+        ret = network_new(36, 2, 20, 2);
         network_randomize(ret);
         return (ret);
     }

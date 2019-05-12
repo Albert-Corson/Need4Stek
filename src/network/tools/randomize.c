@@ -33,5 +33,5 @@ double clang(double min, double max)
     double randnbr = (double)rand() / 10;
 
     randnbr = randnbr / ((double)RAND_MAX / 10 + 0.1);
-    return (floor(randnbr * (max - min + 1) + min));
+    return (randnbr * (max - min) + min);
 }

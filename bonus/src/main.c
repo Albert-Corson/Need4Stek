@@ -7,10 +7,12 @@
 
 #include "train.h"
 
+void test(network_t **sample, int size);
+
 int main(void)
 {
-    network_t **sample = restore_sample(40, "bonus/saves");
+    network_t **sample = restore_sample(20, "bonus/saves");
 
-    evolve_sample(sample, 40, 50);
+    evolve_sample(sample, 20, 500);
     destroy_sample(sample);
 }

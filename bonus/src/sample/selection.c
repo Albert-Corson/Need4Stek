@@ -7,53 +7,45 @@
 
 #include "train.h"
 
-int find_replacement_id(network_t **sample, int max, int curr, int *ids)
+void sortswap(network_t **base, int index, __compar_fn_t compar)
 {
-    int index = 0;
+    void *tmp = NULL;
 
-    while (index < max) {
-        if (ids[index] == -1 || sample[ids[index]]->rank < sample[curr]->rank)
-            return (index);
-        ++index;
-    }
-    return (-1);
-}
-
-void get_elite_ids(network_t **sample, int max, int *ids)
-{
-    int x = 0;
-    int y = 0;
-
-    memset(ids, -1, sizeof(int) * max);
-    while (sample[x]) {
-        y = find_replacement_id(sample, max, x, ids);
-        if (y != -1)
-            ids[y] = x;
-        ++x;
+    if (compar(base[index], base[index + 1])) {
+        tmp = base[index];
+        base[index] = base[index + 1];
+        base[index + 1] = tmp;
     }
 }
 
-bool in_array(int *arr, int size, int value)
+void sort(network_t **base, size_t size, __compar_fn_t compar)
 {
-    int index = 0;
+    size_t x = 0;
+    size_t y = 0;
 
-    while (index < size) {
-        if (arr[index] == value)
-            return (true);
-        ++index;
+    for (x = 0; x < size - 1; x++) {
+        for (y = 0; y < size - 1 - x; y++) {
+            sortswap(base, y, compar);
+        }
     }
-    return (false);
+}
+
+int compar(const void *n1, const void *n2)
+{
+    return (((network_t *)n2)->rank > ((network_t *)n1)->rank);
 }
 
 network_t **keep_elite(network_t **sample, int size)
 {
+    double threshold = fmax(1.2, get_sample_average(sample) * 0.9);
+    bool lucky = false;
     int max = fmax(2, floor(0.25 * size));
-    int bests[max];
     int index = 0;
 
-    get_elite_ids(sample, max, bests);
+    sort(sample, size, compar);
     while (index < size) {
-        if (!in_array(bests, max, index)) {
+        lucky = (clang(0,1) < 0.1);
+        if ((sample[index]->rank < threshold || index > max) && !lucky) {
             network_destroy(sample[index]);
             sample[index] = NULL;
         }

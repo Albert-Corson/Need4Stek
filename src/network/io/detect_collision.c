@@ -13,7 +13,7 @@ bool detect_collision(api_response_t *res)
 
     auto_exec(res, GET_INFO_LIDAR);
     while (index != 32) {
-        if (res->data[index] == 0)
+        if (res->data[index] < 25)
             return (true);
         index++;
     }

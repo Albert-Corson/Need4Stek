@@ -13,5 +13,7 @@
 void save_sample(network_t **sample, int size, char *dest_folder);
 network_t **restore_sample(int size, char *src_folder);
 void play_simulation(network_t *net);
+void show_scoreboard(network_t **sample);
+double get_sample_average(network_t **sample);
 
 #endif /* !TRAIN_H_ */
