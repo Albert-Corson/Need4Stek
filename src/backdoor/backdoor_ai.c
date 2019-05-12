@@ -13,16 +13,22 @@ double get_average_dist(double *signals);
 
 vectorf_t get_average_side_dist(double *signals);
 
-double get_longer_dist_angle(double *signals);
+double get_longer_dist_index(double *signals);
 
 double get_turn(api_response_t *res, double average, double turn)
 {
     vectorf_t sides;
-    double div_by = 8.5;
+    double div_by = 8.0;
+    int i = turn;
 
-    sides = get_average_side_dist(res->data);
+    turn /= 32.0;
+    turn -= 0.50;
+    turn *= -2;
     if (average < 650.0)
         div_by = 5.1;
+    else if (res->data[i] >= 1500.0)
+        div_by += 2.5;
+    sides = get_average_side_dist(res->data);
     turn += ((sides.x + sides.y) * 2.0);
     turn /= div_by;
     if (turn <= -1.0)
@@ -40,9 +46,9 @@ bool set_movement(api_response_t *res, double speed)
     if (!auto_exec(res, GET_INFO_LIDAR))
         return (false);
     average = get_average_dist(res->data);
-    if (average <= 0.01)
+    if (average == 0.0)
         return (false);
-    wheels = get_longer_dist_angle(res->data);
+    wheels = get_longer_dist_index(res->data);
     wheels = get_turn(res, average, wheels);
     if (avoid_collision(res, -wheels, speed))
         return (true);
