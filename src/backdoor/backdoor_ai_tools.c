@@ -41,19 +41,17 @@ bool avoid_collision(api_response_t *res, double turn, double speed)
 
     if (avoid) {
         auto_exec(res, CAR_FORWARD, 0.0);
-        auto_exec(res, WHEELS_DIR, turn);
         auto_exec(res, CYCLE_WAIT, 6);
+        auto_exec(res, WHEELS_DIR, turn / 1.1);
         auto_exec(res, CAR_BACKWARDS, 0.85);
-        auto_exec(res, CYCLE_WAIT, 6);
-        auto_exec(res, CAR_FORWARD, 0.0);
-        auto_exec(res, WHEELS_DIR, 0.0);
-        auto_exec(res, CYCLE_WAIT, 4);
+        auto_exec(res, CYCLE_WAIT, 15);
+        auto_exec(res, WHEELS_DIR, -turn / 3.0);
         auto_exec(res, CAR_FORWARD, speed);
     }
     return (avoid);
 }
 
-double get_longer_dist_angle(double *signals)
+double get_longer_dist_index(double *signals)
 {
     double ret = 0;
     int i = 0;
@@ -63,9 +61,6 @@ double get_longer_dist_angle(double *signals)
             ret = i;
         ++i;
     }
-    ret /= 32.0;
-    ret -= 0.50;
-    ret *= -2;
     return (ret);
 }
 

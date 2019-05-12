@@ -43,11 +43,11 @@ int api_res_data_get_long_2(api_response_t *res, char *str)
     if (!ret)
         return (-1);
     memset(res->data, 0, sizeof(double) * 32);
-    tmp = str_parse(str + ret, 's', DT_LONG, &(res->data[0]));
+    tmp = str_parse(str + ret, 's', DT_FLOAT, &(res->data[0]));
     if (tmp == -1 || str[ret + tmp] != ',')
         return (-1);
     ret += tmp + 1;
-    tmp = str_parse(str + ret, 'n', DT_LONG, &(res->data[1]));
+    tmp = str_parse(str + ret, 'n', DT_FLOAT, &(res->data[1]));
     if (tmp == -1 || strncmp(str + ret + tmp, "s]:", 3) != 0)
         return (-1);
     res->data_type = RES_LONG_2;
