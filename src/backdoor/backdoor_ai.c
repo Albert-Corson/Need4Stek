@@ -18,7 +18,7 @@ double get_longer_dist_index(double *signals);
 double get_turn(api_response_t *res, double average, double turn)
 {
     vectorf_t sides;
-    double div_by = 8.0;
+    double div_by = 8.2;
     int i = turn;
 
     turn /= 32.0;
