@@ -30,7 +30,7 @@ bool is_colliding(double *signals)
             colliding = true;
         ++i;
     }
-    if (signals[0] <= 27.5 || signals[31] <= 27.5)
+    if (signals[0] <= 25.0 || signals[31] <= 25.0)
         colliding = true;
     return (colliding);
 }
