@@ -38,13 +38,24 @@ double get_turn(api_response_t *res, double average, double turn)
     return (turn);
 }
 
-bool set_movement(api_response_t *res, double speed)
+double get_speed(double *signals)
+{
+    double middle_distance = (signals[15] + signals[16]) / 2.0;
+    double car_speed = fmin(1.0, middle_distance / 1250.0);
+    car_speed = fmax(0.25, car_speed);
+
+    return (car_speed);
+}
+
+bool set_movement(api_response_t *res)
 {
     double wheels = 0;
     double average = 0;
+    double speed = 0;
 
     if (!auto_exec(res, GET_INFO_LIDAR))
         return (false);
+    speed = get_speed(res->data);
     average = get_average_dist(res->data);
     if (average == 0.0)
         return (false);
@@ -53,5 +64,6 @@ bool set_movement(api_response_t *res, double speed)
     if (avoid_collision(res, -wheels, speed))
         return (true);
     auto_exec(res, WHEELS_DIR, wheels);
+    auto_exec(res, CAR_FORWARD, speed);
     return (res->status);
 }
