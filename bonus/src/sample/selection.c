@@ -44,7 +44,7 @@ network_t **keep_elite(network_t **sample, int size)
 
     sort(sample, size, compar);
     while (index < size) {
-        lucky = (clang(0,1) < 0.1);
+        lucky = (clang(0, 1) < 0.1);
         if ((sample[index]->rank < threshold || index > max) && !lucky) {
             network_destroy(sample[index]);
             sample[index] = NULL;

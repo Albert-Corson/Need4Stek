@@ -33,6 +33,13 @@ void show_scoreboard(network_t **sample)
     dprintf(2, "# average score [%.3f] #\n\n", average);
 }
 
+void show_score(api_response_t *res, network_t *net)
+{
+    dprintf(2, "cpc: %d\n", res->cp_id);
+    dprintf(2, "tim: %ld\n", res->timestamp[0]);
+    dprintf(2, "eff: %.5f\n", net->rank);
+}
+
 void evaluate_network(network_t *net)
 {
     api_response_t res = api_res_new();
@@ -54,9 +61,7 @@ void evaluate_network(network_t *net)
     }
     net->rank = res.cp_id + 1 / (double)(1 + res.timestamp[0]);
     net->rank += lidar_average / 3010;
-    dprintf(2, "cpc: %d\n", res.cp_id);
-    dprintf(2, "tim: %ld\n", res.timestamp[0]);
-    dprintf(2, "eff: %.5f\n", net->rank);
+    show_score(&res, net);
     auto_exec(&res, STOP_SIMULATION);
 }
 
