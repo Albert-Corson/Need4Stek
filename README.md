@@ -1,4 +1,4 @@
-# need-4-stek
+# Need 4 Stek
 An AI capable of driving a car in a simulator (V-REP PRO EDU)
 
 This was a school project
